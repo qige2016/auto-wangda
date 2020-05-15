@@ -13,13 +13,14 @@ class AutoWangda {
    *Creates an instance of AutoWangda.
    * @param data {Object} 登录参数
    */
-  constructor({ data }) {
+  constructor({ data, subjectId }) {
     this.data = data
+    this.subjectId = subjectId
   }
   async init() {
     const authorization = await handleLogin(this.data)
     console.log('登录成功')
-    const resourceIdList = await handleSubject(authorization)
+    const resourceIdList = await handleSubject(this.subjectId, authorization)
     console.log('获取专题信息完成')
     let logIds = []
     for (const resourceId of resourceIdList) {
@@ -96,5 +97,6 @@ class SetInter {
   }
 }
 
-const autoWangda = new AutoWangda({ data })
+const subjectId = config.subjectId
+const autoWangda = new AutoWangda({ data, subjectId })
 autoWangda.init()

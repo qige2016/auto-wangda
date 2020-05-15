@@ -1,5 +1,5 @@
 const axios = require('axios')
-const config = require('../config')
+const http = require('../utils/http')
 
 async function handleCourse(resourceId, authorization) {
   const res = await requestCourse(resourceId, authorization)
@@ -10,7 +10,10 @@ async function handleCourse(resourceId, authorization) {
   }))
   const logIdList = await Promise.all(
     idList.map(async item => {
-      const response = await requestLog(item.id, authorization)
+      const params = {
+        clientType: 0
+      }
+      const response = await requestLog(item.id, params, authorization)
       const logId = response.data.id
       return {
         logId,
@@ -22,28 +25,23 @@ async function handleCourse(resourceId, authorization) {
   return logIdList
 }
 function requestCourse(resourceId, authorization) {
-  return axios.get(
-    config.url + 'api/v1/course-study/course-front/info/' + resourceId,
+  return http.get(
+    'api/v1/course-study/course-front/info/' + resourceId,
+    {},
     {
       headers: {
-        Authorization: authorization,
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
+        Authorization: authorization
       }
     }
   )
 }
-function requestLog(id, authorization) {
-  return axios.get(
-    config.url + 'api/v1/course-study/course-front/start-progress/' + id,
+function requestLog(id, params, authorization) {
+  return http.get(
+    'api/v1/course-study/course-front/start-progress/' + id,
+    params,
     {
-      params: {
-        clientType: 0
-      },
       headers: {
-        Authorization: authorization,
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
+        Authorization: authorization
       }
     }
   )
