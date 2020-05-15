@@ -1,5 +1,5 @@
-import sum from '..'
+const aes = require('../../utils/aes')
 
-test('adds 1 + 2 to equal 3', () => {
-  expect(sum(1, 2)).toBe(3)
+test('aes encrypt and decrypt', () => {
+  expect(aes.decrypt(aes.encrypt('1'))).toBe('1')
 })
