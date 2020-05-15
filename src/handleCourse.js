@@ -5,6 +5,7 @@ async function handleCourse(resourceId, authorization) {
   const res = await requestCourse(resourceId, authorization)
   const idList = res.data.courseChapters[0].courseChapterSections.map(item => ({
     id: item.id,
+    name: item.name,
     timeSecond: item.timeSecond
   }))
   const logIdList = await Promise.all(
@@ -13,6 +14,7 @@ async function handleCourse(resourceId, authorization) {
       const logId = response.data.id
       return {
         logId,
+        name: item.name,
         timeSecond: item.timeSecond
       }
     })
