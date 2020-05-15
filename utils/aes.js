@@ -35,7 +35,7 @@ const decrypt = encrypted => {
 
 const encryptObj = obj => {
   let t = {}
-  for (let key in obj) {
+  for (const key in obj) {
     t[key] = encrypt(obj[key])
   }
   return t
@@ -43,7 +43,7 @@ const encryptObj = obj => {
 
 const decryptObj = obj => {
   let t = {}
-  for (let key in obj) {
+  for (const key in obj) {
     t[key] = decrypt(obj[key])
   }
   return t

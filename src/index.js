@@ -6,6 +6,7 @@ const config = require('../config')
 const data = require('../config/loginForm')
 const handleLogin = require('./login')
 const handleSubject = require('./handleSubject')
+const handleCourse = require('./handleCourse')
 
 class AutoWangda {
   /**
@@ -18,9 +19,13 @@ class AutoWangda {
   async init() {
     const authorization = await handleLogin(this.data)
     const resourceIdList = await handleSubject(authorization)
+    let ids = []
+    for (const resourceId of resourceIdList) {
+      const idList = await handleCourse(resourceId, authorization)
+      ids = ids.concat(idList)
+    }
   }
-  async handleCourse() {}
-  requestCourse() {}
+  handleVideo() {}
   handleVideoProgress() {}
   requestVideoProgress() {}
 }
