@@ -19,13 +19,12 @@ class AutoWangda {
   async init() {
     const authorization = await handleLogin(this.data)
     const resourceIdList = await handleSubject(authorization)
-    let ids = []
+    let logIds = []
     for (const resourceId of resourceIdList) {
-      const idList = await handleCourse(resourceId, authorization)
-      ids = ids.concat(idList)
+      const logIdList = await handleCourse(resourceId, authorization)
+      logIds = logIds.concat(logIdList)
     }
   }
-  handleVideo() {}
   handleVideoProgress() {}
   requestVideoProgress() {}
 }
