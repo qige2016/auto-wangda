@@ -1,24 +1,17 @@
-version: 2
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
 jobs:
-  build:
-    working_directory: ~/project
-    docker:
-      - image: circleci/node:latest
-    branches:
-      ignore:
-        - gh-pages # list of branches to ignore
-        - /release\/.*/ # or ignore regexes
+  build-and-test:
+    executor:
+      name: node/default
     steps:
       - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
-      - run:
-          name: install dependences
-          command: yarn install
-      - save_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: test
-          command: yarn test
+      - node/with-cache:
+          steps:
+            - run: npm install
+            - run: npm test
+workflows:
+    build-and-test:
+      jobs:
+        - build-and-test
