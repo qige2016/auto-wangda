@@ -1,4 +1,4 @@
 module.exports = {
   url: 'https://wangda.chinamobile.com/',
-  subjectId: 'cf183df6-fd7c-4d1e-8c9c-3c13d6d3cabb'
+  subjectId: '1848b9c5-89b3-41a4-9d26-4a0fd063ba64'
 }

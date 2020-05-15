@@ -18,14 +18,17 @@ class AutoWangda {
   }
   async init() {
     const authorization = await handleLogin(this.data)
+    console.log('登录成功')
     const resourceIdList = await handleSubject(authorization)
+    console.log('获取专题信息完成')
     let logIds = []
     for (const resourceId of resourceIdList) {
       const logIdList = await handleCourse(resourceId, authorization)
       logIds = logIds.concat(logIdList)
     }
+    console.log('获取课程信息完成')
     new SetInter({
-      timer: 20,
+      timer: 1,
       fn: function() {
         autoWangda.handlePostAll(logIds, authorization)
       }
@@ -47,6 +50,8 @@ class AutoWangda {
       const resData = res.data || {}
       if (resData.finishStatus === 2) {
         console.log(item.name + '已完成')
+      } else {
+        console.log(item.name + '学习中')
       }
     }
   }
@@ -68,10 +73,10 @@ class AutoWangda {
 // 定时任务
 class SetInter {
   constructor({ timer, fn }) {
-    this.timer = timer // 每几秒执行
+    this.timer = timer // 每几分钟执行
     this.fn = fn //执行的回调
-    this.rule = new schedule.RecurrenceRule() //实例化一个对象
-    this.rule.second = this.setRule() // 调用原型方法，schedule的语法而已
+    this.rule = new schedule.RecurrenceRule()
+    this.rule.minute = this.setRule() // 调用原型方法，前端源码为1分钟轮询1次
     this.init()
   }
   setRule() {
@@ -81,7 +86,7 @@ class SetInter {
       rule.push(i)
       i += this.timer
     }
-    return rule //假设传入的timer为5，则表示定时任务每5秒执行一次
+    return rule //假设传入的timer为5，则表示定时任务每5分钟执行一次
     // [1, 6, 11, 16, 21, 26, 31, 36, 41, 46, 51, 56]
   }
   init() {
