@@ -1,6 +1,6 @@
 # auto-wangda
 
-> my astonishing project
+> 好好学习，天天搬砖
 
 ## Status
 
@@ -12,20 +12,11 @@
 [![](https://img.shields.io/badge/support%20me-donate-ff00ff.svg)](https://www.patreon.com/qige2016)
 [![](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-## Contributing
-
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `yarn run commit`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
-
 ## Author
 
 **auto-wangda** © [qige2016](https://github.com/qige2016), Released under the [MIT](./LICENSE) License.<br>
-Authored and maintained by HcySunYang.
 
-> [github.com/qige2016](https://github.com/qige2016) · GitHub [@qige2016](https://github.com/qige2016) · Twitter [@qige2016](https://twitter.com/qige2016)
+> [github.com/qige2016](https://github.com/qige2016) · GitHub [@qige2016](https://github.com/qige2016)
 
 ## License
 
