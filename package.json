@@ -1,8 +1,8 @@
 {
   "name": "auto-wangda",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "my astonishing project",
-  "main": "dist/auto-wangda.cjs.js",
+  "main": "dist/index.js",
   "files": [
     "dist"
   ],
@@ -37,7 +37,7 @@
     "@commitlint/read": "^7.1.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
-    "bili": "^3.4.2",
+    "bili": "^4.10.0",
     "commitizen": "^3.0.5",
     "conventional-changelog-cli": "^2.0.11",
     "cz-emoji": "^1.1.2",
