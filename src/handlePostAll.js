@@ -2,9 +2,10 @@ const qs = require('qs')
 const aes = require('../utils/aes')
 const http = require('../utils/http')
 const Schedule = require('./Schedule')
+const chalk = require('chalk')
 
 async function handlePostAll(logIds) {
-  console.log('开始学习')
+  console.log('   开始学习')
   for (const item of logIds) {
     const data =
       item.sectionType === 6
@@ -28,10 +29,14 @@ async function handlePostAll(logIds) {
             : await requestDocProgress(qs.stringify(aes.encryptObj(data)))
         const resData = res.data || {}
         if (resData.finishStatus === 2) {
-          console.log(item.name + '已完成')
+          console.log(
+            item.name + ' -- ' + chalk.green('已完成') + chalk.green('✔')
+          )
           schedule.setStop(true)
         } else {
-          console.log(item.name + '学习中')
+          console.log(
+            item.name + ' -- ' + chalk.cyan('学习中') + chalk.cyan('zzz')
+          )
         }
       }
     })

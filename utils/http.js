@@ -14,7 +14,7 @@ instance.defaults.headers.post['Content-Type'] =
 /** 添加请求拦截器 **/
 instance.interceptors.request.use(
   config => {
-    config.headers['Authorization'] = store.get('AUTH_TOKEN')
+    config.headers['Authorization'] = store.get('AUTH_TOKEN') || ''
     return config
   },
   error => {
