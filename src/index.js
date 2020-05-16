@@ -10,7 +10,7 @@ const promptList = [
     name: 'username'
   },
   {
-    type: 'input',
+    type: 'password',
     message: '请输入登录密码:',
     name: 'password'
   },
