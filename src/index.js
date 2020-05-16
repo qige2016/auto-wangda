@@ -76,24 +76,12 @@ class AutoWangda {
 // 定时任务
 class SetInter {
   constructor({ timer, fn }) {
-    this.timer = timer // 每几分钟执行
+    this.timer = timer // 每几分钟执行, 前端源码为1分钟轮询1次
     this.fn = fn //执行的回调
-    this.rule = new schedule.RecurrenceRule()
-    this.rule.minute = this.setRule() // 调用原型方法，前端源码为1分钟轮询1次
     this.init()
   }
-  setRule() {
-    let rule = []
-    let i = 1
-    while (i < 60) {
-      rule.push(i)
-      i += this.timer
-    }
-    return rule //假设传入的timer为5，则表示定时任务每5分钟执行一次
-    // [1, 6, 11, 16, 21, 26, 31, 36, 41, 46, 51, 56]
-  }
   init() {
-    schedule.scheduleJob(this.rule, () => {
+    schedule.scheduleJob(`*/${this.timer} * * * *`, () => {
       this.fn() // 定时调用传入的回调方法
     })
   }

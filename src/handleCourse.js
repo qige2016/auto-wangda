@@ -24,7 +24,7 @@ async function handleCourse(resourceId) {
   return logIdList
 }
 function requestCourse(resourceId) {
-  return http.get('api/v1/course-study/course-front/info/' + resourceId, {})
+  return http.get('api/v1/course-study/course-front/info/' + resourceId)
 }
 function requestLog(id, params) {
   return http.get(
