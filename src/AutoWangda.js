@@ -17,15 +17,15 @@ class AutoWangda {
   async run() {
     const authorization = await handleLogin(this.data)
     store.set('AUTH_TOKEN', authorization)
-    console.log(chalk.green('✔') + '  登录成功')
+    console.log(chalk.green('✔') + ' 登录成功')
     const resourceIdList = await handleSubject(this.subjectId)
-    console.log(chalk.green('✔') + '  获取专题信息完成')
+    console.log(chalk.green('✔') + ' 获取专题信息完成')
     let logIds = []
     for (const resourceId of resourceIdList) {
       const logIdList = await handleCourse(resourceId)
       logIds = logIds.concat(logIdList)
     }
-    console.log(chalk.green('✔') + '  获取课程信息完成')
+    console.log(chalk.green('✔') + ' 获取课程信息完成')
     await handlePostAll(logIds, authorization)
   }
 }

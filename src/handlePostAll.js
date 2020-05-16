@@ -5,7 +5,7 @@ const Schedule = require('./Schedule')
 const chalk = require('chalk')
 
 async function handlePostAll(logIds) {
-  console.log('   开始学习')
+  console.log('  开始学习')
   for (const item of logIds) {
     const data =
       item.sectionType === 6
@@ -30,12 +30,16 @@ async function handlePostAll(logIds) {
         const resData = res.data || {}
         if (resData.finishStatus === 2) {
           console.log(
-            item.name + ' -- ' + chalk.green('已完成') + chalk.green('✔')
+            '  ' +
+              item.name +
+              ' -- ' +
+              chalk.green('已完成') +
+              chalk.green(' ✔')
           )
           schedule.setStop(true)
         } else {
           console.log(
-            item.name + ' -- ' + chalk.cyan('学习中') + chalk.cyan('zzz')
+            '  ' + item.name + ' -- ' + chalk.cyan('学习中') + chalk.cyan(' ~')
           )
         }
       }
