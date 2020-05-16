@@ -16,7 +16,7 @@
 ```bash
 npm i -g auto-wangda
 
-auto-wangda
+autoWangda
 ```
 
 ## License
