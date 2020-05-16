@@ -12,12 +12,6 @@
 [![](https://img.shields.io/badge/support%20me-donate-ff00ff.svg)](https://www.patreon.com/qige2016)
 [![](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-## Author
-
-**auto-wangda** © [qige2016](https://github.com/qige2016), Released under the [MIT](./LICENSE) License.<br>
-
-> [github.com/qige2016](https://github.com/qige2016) · GitHub [@qige2016](https://github.com/qige2016)
-
 ## License
 
 MIT &copy; qige2016
