@@ -4,6 +4,7 @@ const schedule = require('node-schedule')
 const aes = require('../utils/aes')
 const config = require('../config')
 const data = require('../config/loginForm')
+const store = require('../utils/store')
 const handleLogin = require('./login')
 const handleSubject = require('./handleSubject')
 const handleCourse = require('./handleCourse')
@@ -19,12 +20,13 @@ class AutoWangda {
   }
   async init() {
     const authorization = await handleLogin(this.data)
+    store.set('AUTH_TOKEN', authorization)
     console.log('登录成功')
-    const resourceIdList = await handleSubject(this.subjectId, authorization)
+    const resourceIdList = await handleSubject(this.subjectId)
     console.log('获取专题信息完成')
     let logIds = []
     for (const resourceId of resourceIdList) {
-      const logIdList = await handleCourse(resourceId, authorization)
+      const logIdList = await handleCourse(resourceId)
       logIds = logIds.concat(logIdList)
     }
     console.log('获取课程信息完成')
