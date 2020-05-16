@@ -1,4 +1,25 @@
-## 1.0.0 (2020-05-16)
+## <small>1.0.3 (2020-05-16)</small>
+
+* :nut_and_bolt: move structure ([6517712](https://github.com/qige2016/auto-wangda/commit/6517712))
+* Release 1.0.3 ([6fb498c](https://github.com/qige2016/auto-wangda/commit/6fb498c))
+
+
+
+## <small>1.0.2 (2020-05-16)</small>
+
+* :nut_and_bolt: fix bin ([d06ee00](https://github.com/qige2016/auto-wangda/commit/d06ee00))
+* Release 1.0.2 ([6d4e0b8](https://github.com/qige2016/auto-wangda/commit/6d4e0b8))
+
+
+
+## <small>1.0.1 (2020-05-16)</small>
+
+* :nut_and_bolt: fix README.md ([8c3ebd4](https://github.com/qige2016/auto-wangda/commit/8c3ebd4))
+* Release 1.0.1 ([b155687](https://github.com/qige2016/auto-wangda/commit/b155687))
+
+
+
+## <small>1.0.1-0 (2020-05-16)</small>
 
 * :art: add requestLog for getting logIdList ([7dceb68](https://github.com/qige2016/auto-wangda/commit/7dceb68))
 * :art: encapsulate axios with http.js ([b18d08b](https://github.com/qige2016/auto-wangda/commit/b18d08b))
@@ -27,6 +48,7 @@
 * Add .circleci/config.yml ([e248258](https://github.com/qige2016/auto-wangda/commit/e248258))
 * Add .circleci/config.yml ([80fb26d](https://github.com/qige2016/auto-wangda/commit/80fb26d))
 * Add .circleci/config.yml ([c1f583b](https://github.com/qige2016/auto-wangda/commit/c1f583b))
+* Release 1.0.1-0 ([c5d034d](https://github.com/qige2016/auto-wangda/commit/c5d034d))
 
 
 
