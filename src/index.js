@@ -1,6 +1,5 @@
 const axios = require('axios')
 const qs = require('qs')
-const schedule = require('node-schedule')
 const aes = require('../utils/aes')
 const config = require('../config')
 const data = require('../config/loginForm')
@@ -8,6 +7,7 @@ const store = require('../utils/store')
 const handleLogin = require('./login')
 const handleSubject = require('./handleSubject')
 const handleCourse = require('./handleCourse')
+const Schedule = require('./Schedule')
 
 class AutoWangda {
   /**
@@ -18,7 +18,7 @@ class AutoWangda {
     this.data = data
     this.subjectId = subjectId
   }
-  async init() {
+  async run() {
     const authorization = await handleLogin(this.data)
     store.set('AUTH_TOKEN', authorization)
     console.log('登录成功')
@@ -30,14 +30,10 @@ class AutoWangda {
       logIds = logIds.concat(logIdList)
     }
     console.log('获取课程信息完成')
-    new SetInter({
-      timer: 1,
-      fn: function() {
-        autoWangda.handlePostAll(logIds, authorization)
-      }
-    })
+    await this.handlePostAll(logIds, authorization)
   }
   async handlePostAll(logIds, authorization) {
+    console.log('开始学习')
     for (const item of logIds) {
       const data = {
         logId: item.logId,
@@ -46,16 +42,23 @@ class AutoWangda {
         resourceTotalTime: item.timeSecond,
         organizationId: '1'
       }
-      const res = await this.requestVideoProgress(
-        qs.stringify(aes.encryptObj(data)),
-        authorization
-      )
-      const resData = res.data || {}
-      if (resData.finishStatus === 2) {
-        console.log(item.name + '已完成')
-      } else {
-        console.log(item.name + '学习中')
-      }
+      const job = new Schedule({
+        timer: 1,
+        fn: async () => {
+          const res = await this.requestVideoProgress(
+            qs.stringify(aes.encryptObj(data)),
+            authorization
+          )
+          const resData = res.data || {}
+          if (resData.finishStatus === 2) {
+            console.log(item.name + '已完成')
+            job.setStop(true)
+          } else {
+            console.log(item.name + '学习中')
+          }
+        }
+      })
+      job.run()
     }
   }
   requestVideoProgress(postData, authorization) {
@@ -73,20 +76,7 @@ class AutoWangda {
     )
   }
 }
-// 定时任务
-class SetInter {
-  constructor({ timer, fn }) {
-    this.timer = timer // 每几分钟执行, 前端源码为1分钟轮询1次
-    this.fn = fn //执行的回调
-    this.init()
-  }
-  init() {
-    schedule.scheduleJob(`*/${this.timer} * * * *`, () => {
-      this.fn() // 定时调用传入的回调方法
-    })
-  }
-}
 
 const subjectId = config.subjectId
 const autoWangda = new AutoWangda({ data, subjectId })
-autoWangda.init()
+autoWangda.run()
