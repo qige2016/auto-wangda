@@ -3,6 +3,7 @@
   "version": "1.0.1-0",
   "description": "my astonishing project",
   "main": "dist/index.js",
+  "bin": "dist/index.js",
   "files": [
     "dist"
   ],

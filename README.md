@@ -9,8 +9,15 @@
 [![](https://img.shields.io/npm/v/auto-wangda.svg)](https://www.npmjs.com/package/auto-wangda)
 [![](https://img.shields.io/npm/dm/auto-wangda.svg)](https://www.npmjs.com/package/auto-wangda)
 [![](https://img.shields.io/npm/l/auto-wangda.svg)](https://www.npmjs.com/package/auto-wangda)
-[![](https://img.shields.io/badge/support%20me-donate-ff00ff.svg)](https://www.patreon.com/qige2016)
 [![](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+
+## Quick Start
+
+```bash
+npm i -g auto-wangda
+
+auto-wangda
+```
 
 ## License
 
