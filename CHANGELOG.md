@@ -1,3 +1,11 @@
+## <small>1.0.5 (2020-05-17)</small>
+
+* :beetle: add course array ([2680200](https://github.com/qige2016/auto-wangda/commit/2680200))
+* :nut_and_bolt: update CHANGELOG.md ([fcfab18](https://github.com/qige2016/auto-wangda/commit/fcfab18))
+* Release 1.0.5 ([3ae334d](https://github.com/qige2016/auto-wangda/commit/3ae334d))
+
+
+
 ## <small>1.0.4 (2020-05-17)</small>
 
 * :nut_and_bolt: update CHANGELOG.md ([e258c18](https://github.com/qige2016/auto-wangda/commit/e258c18))
