@@ -1,3 +1,11 @@
+## <small>1.0.4 (2020-05-17)</small>
+
+* :nut_and_bolt: update CHANGELOG.md ([e258c18](https://github.com/qige2016/auto-wangda/commit/e258c18))
+* :star2: add chapter array ([4de2f0c](https://github.com/qige2016/auto-wangda/commit/4de2f0c))
+* Release 1.0.4 ([d9b56a4](https://github.com/qige2016/auto-wangda/commit/d9b56a4))
+
+
+
 ## <small>1.0.3 (2020-05-16)</small>
 
 * :nut_and_bolt: move structure ([6517712](https://github.com/qige2016/auto-wangda/commit/6517712))
