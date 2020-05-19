@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const inquirer = require('inquirer')
-const config = require('../config')
 const loginForm = require('../config/loginForm')
 const AutoWangda = require('../lib')
 
