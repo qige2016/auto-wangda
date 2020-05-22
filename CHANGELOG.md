@@ -1,3 +1,11 @@
+## <small>1.0.7 (2020-05-22)</small>
+
+* :art: updata timer ([b19b741](https://github.com/qige2016/auto-wangda/commit/b19b741))
+* :nut_and_bolt: update CHANGELOG.md ([845451d](https://github.com/qige2016/auto-wangda/commit/845451d))
+* Release 1.0.7 ([3d01dcc](https://github.com/qige2016/auto-wangda/commit/3d01dcc))
+
+
+
 ## <small>1.0.6 (2020-05-22)</small>
 
 * :nut_and_bolt: remove a useless reference ([519b217](https://github.com/qige2016/auto-wangda/commit/519b217))
