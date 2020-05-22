@@ -1,3 +1,18 @@
+## <small>1.1.2 (2020-05-22)</small>
+
+* :beetle: fix docProgress judge ([642da2b](https://github.com/qige2016/auto-wangda/commit/642da2b))
+* Release 1.1.2 ([9fedfb5](https://github.com/qige2016/auto-wangda/commit/9fedfb5))
+
+
+
+## <small>1.1.1 (2020-05-22)</small>
+
+* :beetle: fix no timing ([b3b25d5](https://github.com/qige2016/auto-wangda/commit/b3b25d5))
+* :star2: update CHANGELOG.md ([dba5941](https://github.com/qige2016/auto-wangda/commit/dba5941))
+* Release 1.1.1 ([1aafad8](https://github.com/qige2016/auto-wangda/commit/1aafad8))
+
+
+
 ## 1.1.0 (2020-05-22)
 
 * :beetle: remove finishStatus judge ([8ef7832](https://github.com/qige2016/auto-wangda/commit/8ef7832))
