@@ -1,6 +1,6 @@
 {
   "name": "auto-wangda",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "my astonishing project",
   "main": "dist/index.js",
   "bin": {
