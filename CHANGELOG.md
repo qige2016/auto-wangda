@@ -1,3 +1,13 @@
+## <small>1.1.3 (2020-05-22)</small>
+
+* :nut_and_bolt: update CHANGELOG.md ([23bc3bc](https://github.com/qige2016/auto-wangda/commit/23bc3bc))
+* :nut_and_bolt: update README.md ([fe47b10](https://github.com/qige2016/auto-wangda/commit/fe47b10))
+* :nut_and_bolt: update README.md ([b0a84c7](https://github.com/qige2016/auto-wangda/commit/b0a84c7))
+* :star2: add time and finish pattern ([cc8ebfb](https://github.com/qige2016/auto-wangda/commit/cc8ebfb))
+* Release 1.1.3 ([9290b20](https://github.com/qige2016/auto-wangda/commit/9290b20))
+
+
+
 ## <small>1.1.2 (2020-05-22)</small>
 
 * :beetle: fix docProgress judge ([642da2b](https://github.com/qige2016/auto-wangda/commit/642da2b))
