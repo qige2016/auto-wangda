@@ -1,3 +1,12 @@
+## <small>1.0.6 (2020-05-22)</small>
+
+* :nut_and_bolt: remove a useless reference ([519b217](https://github.com/qige2016/auto-wangda/commit/519b217))
+* :nut_and_bolt: update CHANGELOG.md ([22b56d4](https://github.com/qige2016/auto-wangda/commit/22b56d4))
+* :star2: add registerStudy ([7dce44d](https://github.com/qige2016/auto-wangda/commit/7dce44d))
+* Release 1.0.6 ([b2108d8](https://github.com/qige2016/auto-wangda/commit/b2108d8))
+
+
+
 ## <small>1.0.5 (2020-05-17)</small>
 
 * :beetle: add course array ([2680200](https://github.com/qige2016/auto-wangda/commit/2680200))
