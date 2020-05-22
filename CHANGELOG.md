@@ -1,3 +1,11 @@
+## 1.1.0 (2020-05-22)
+
+* :beetle: remove finishStatus judge ([8ef7832](https://github.com/qige2016/auto-wangda/commit/8ef7832))
+* :star2: update CHANGELOG.md ([ccdbc02](https://github.com/qige2016/auto-wangda/commit/ccdbc02))
+* Release 1.1.0 ([de49400](https://github.com/qige2016/auto-wangda/commit/de49400))
+
+
+
 ## <small>1.0.7 (2020-05-22)</small>
 
 * :art: updata timer ([b19b741](https://github.com/qige2016/auto-wangda/commit/b19b741))
