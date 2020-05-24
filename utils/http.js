@@ -3,7 +3,7 @@ const config = require('../config')
 const store = require('./store')
 
 const instance = axios.create({
-  timeout: 10000,
+  timeout: 30000,
   baseURL: config.url
 })
 instance.defaults.headers.common['User-Agent'] =
@@ -35,6 +35,7 @@ const get = (url, params, config = {}) => {
         resolve(response)
       })
       .catch(error => {
+        console.log(error.response)
         reject(error)
       })
   })
@@ -53,6 +54,7 @@ const post = (url, data, config = {}) => {
         resolve(response)
       })
       .catch(error => {
+        console.log(error.response)
         reject(error)
       })
   })
