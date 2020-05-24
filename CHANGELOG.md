@@ -1,3 +1,11 @@
+## 1.2.0 (2020-05-24)
+
+* :beetle: fix no sectionType ([be26b0a](https://github.com/qige2016/auto-wangda/commit/be26b0a))
+* :nut_and_bolt: update CHANGELOG.md ([44bbf16](https://github.com/qige2016/auto-wangda/commit/44bbf16))
+* Release 1.2.0 ([969915b](https://github.com/qige2016/auto-wangda/commit/969915b))
+
+
+
 ## <small>1.1.3 (2020-05-22)</small>
 
 * :nut_and_bolt: update CHANGELOG.md ([23bc3bc](https://github.com/qige2016/auto-wangda/commit/23bc3bc))
