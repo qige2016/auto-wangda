@@ -10,12 +10,31 @@
 [![](https://img.shields.io/npm/l/auto-wangda.svg)](https://www.npmjs.com/package/auto-wangda)
 [![](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-## Quick Start
+## Installation
 
 ```bash
 npm i -g auto-wangda
+```
 
+## CLI Usage
+
+```bash
 autoWangda
+```
+
+## Usage
+
+``` javascript
+const AutoWangda = require('auto-wangda')
+
+const data = {
+  username: '',
+  password: ''
+}
+const subjectId = ''
+
+const autoWangda = new AutoWangda({ data, subjectId })
+autoWangda.run()
 ```
 
 ## License

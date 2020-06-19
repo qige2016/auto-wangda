@@ -1,17 +1,17 @@
 {
   "name": "auto-wangda",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "my astonishing project",
   "main": "dist/index.js",
   "bin": {
-    "autoWangda": "dist/index.js"
+    "autoWangda": "dist/cli.js"
   },
   "files": [
     "dist"
   ],
   "keywords": [],
   "scripts": {
-    "build": "bili bin/index.js",
+    "build": "bili lib/index.js bin/cli.js",
     "lint": "eslint **/*.js --fix",
     "test": "jest --coverage",
     "commit": "git-cz",
@@ -27,6 +27,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.2",
+    "cac": "^6.5.10",
     "chalk": "^4.0.0",
     "conf": "^6.2.4",
     "crypto-js": "^4.0.0",

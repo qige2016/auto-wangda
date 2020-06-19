@@ -1769,6 +1769,11 @@ builtin-modules@^3.1.0:
   resolved "https://registry.npm.taobao.org/builtin-modules/download/builtin-modules-3.1.0.tgz#aad97c15131eb76b65b50ef208e7584cd76a7484"
   integrity sha1-qtl8FRMet2tltQ7yCOdYTNdqdIQ=
 
+cac@^6.5.10:
+  version "6.5.10"
+  resolved "https://registry.npm.taobao.org/cac/download/cac-6.5.10.tgz#be1d4509af1809dca601685145cd80ea85dabe0d"
+  integrity sha1-vh1FCa8YCdymAWhRRc2A6oXavg0=
+
 cache-base@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/cache-base/download/cache-base-1.0.1.tgz#0a7f46416831c8b662ee36fe4e7c59d76f666ab2"
