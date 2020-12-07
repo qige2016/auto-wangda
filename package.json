@@ -19,7 +19,7 @@
     "bin"
   ],
   "scripts": {
-    "build": "yarn clean && tsc -p src",
+    "build": "yarn clean && tsc",
     "clean": "rimraf dist",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "commit": "git-cz",
@@ -47,11 +47,15 @@
     ]
   },
   "dependencies": {
-    "cac": "^6.6.1"
+    "cac": "^6.6.1",
+    "chalk": "^4.1.0",
+    "crypto-js": "^4.0.0",
+    "env-paths": "^2.2.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@types/crypto-js": "^4.0.1",
     "@types/eslint": "^7.2.5",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.14.8",
