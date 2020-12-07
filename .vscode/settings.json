@@ -1,11 +1,12 @@
 {
-  "eslint.enable": true,
-  "files.exclude": {
-    "node_modules": true,
-    ".npm-offline-cache": true
-  },
-  "editor.formatOnSave": true,
-  "[javascript]": {
-    "editor.formatOnSave": true
+  "eslint.validate": [
+    "javascript",
+    "typescript"
+  ],
+  "editor.tabSize": 2,
+  "eslint.run": "onSave",
+  "eslint.autoFixOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
   }
 }
