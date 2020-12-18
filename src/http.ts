@@ -3,6 +3,7 @@ import qs from 'qs'
 import { url } from '../config/url.json'
 import { store } from './store'
 import { logger } from './logger'
+import { aes } from '../utils/aes'
 
 const instance = axios.create({
   timeout: 30000,
@@ -47,14 +48,15 @@ export const get = <T = any, R = AxiosResponse<T>>(
 
 export const post = <T = any, R = AxiosResponse<T>>(
   url: string,
-  data?: obj,
-  config?: AxiosRequestConfig
+  data?: any,
+  config?: AxiosRequestConfig,
+  noEncrypt?: boolean
 ): Promise<AxiosResponse<R>> => {
   return new Promise((resolve, reject) => {
     instance({
       method: 'post',
       url,
-      data: qs.stringify(data),
+      data: noEncrypt ? qs.stringify(data) : qs.stringify(aes.encryptObj(data)),
       ...config
     })
       .then((response) => {
