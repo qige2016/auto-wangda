@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+import qs from 'qs'
 import { url } from '../config/url.json'
 import { store } from './store'
 import { logger } from './logger'
@@ -46,14 +47,14 @@ export const get = <T = any, R = AxiosResponse<T>>(
 
 export const post = <T = any, R = AxiosResponse<T>>(
   url: string,
-  data?: any,
+  data?: obj,
   config?: AxiosRequestConfig
 ): Promise<AxiosResponse<R>> => {
   return new Promise((resolve, reject) => {
     instance({
       method: 'post',
       url,
-      data,
+      data: qs.stringify(data),
       ...config
     })
       .then((response) => {
