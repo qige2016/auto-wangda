@@ -6,8 +6,8 @@ const courseInfoUrl = 'api/v1/course-study/course-front/info/'
 
 const startProgressUrl = 'api/v1/course-study/course-front/start-progress/'
 
-export const logIds = async (
-  resourceId: string
+export const getLogIds = async (
+  resourceId: string[]
 ): Promise<{ [key: string]: string | number }[]> => {
   await post(registerStudyUrl, { courseId: resourceId, type: 6 })
 

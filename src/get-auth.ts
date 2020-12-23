@@ -1,6 +1,6 @@
 import { post } from './http'
 
-interface LoginData {
+export interface LoginData {
   captcha: string
   key: string
   password: string
@@ -13,7 +13,7 @@ const membersEncryptUrl = 'oauth/api/v1/members-encrypt'
 
 const authUrl = 'oauth/api/v1/auth'
 
-export const auth = async (loginData: LoginData): Promise<string> => {
+export const getAuth = async (loginData: LoginData): Promise<string> => {
   const {
     data: {
       check_token,
