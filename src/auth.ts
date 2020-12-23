@@ -19,19 +19,15 @@ export const auth = async (loginData: LoginData): Promise<string> => {
       check_token,
       members: [{ id }]
     }
-  } = await post(membersEncryptUrl, loginData)
+  } = await post(membersEncryptUrl, loginData, true)
 
   const {
     data: { token_type, access_token }
-  } = await post(
-    authUrl,
-    {
-      check_token,
-      key: loginData.key,
-      userid: id
-    },
-    false
-  )
+  } = await post(authUrl, {
+    check_token,
+    key: loginData.key,
+    userid: id
+  })
 
   return token_type + '__' + access_token
 }

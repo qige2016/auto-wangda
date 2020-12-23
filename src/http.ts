@@ -49,14 +49,14 @@ export const get = (
 export const post = (
   url: string,
   data?: any,
-  noEncrypt?: boolean,
+  encrypt?: boolean,
   config?: AxiosRequestConfig
 ): Promise<AxiosResponse> => {
   return new Promise((resolve, reject) => {
     instance({
       method: 'post',
       url,
-      data: noEncrypt ? qs.stringify(data) : qs.stringify(aes.encryptObj(data)),
+      data: encrypt ? qs.stringify(aes.encryptObj(data)) : qs.stringify(data),
       ...config
     })
       .then((response) => {
