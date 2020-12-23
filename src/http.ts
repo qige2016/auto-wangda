@@ -24,11 +24,11 @@ instance.interceptors.request.use(
   (error) => Promise.reject(error)
 )
 
-export const get = <T = any, R = AxiosResponse<T>>(
+export const get = (
   url: string,
   params?: any,
   config?: AxiosRequestConfig
-): Promise<AxiosResponse<R>> => {
+): Promise<AxiosResponse> => {
   return new Promise((resolve, reject) => {
     instance({
       method: 'get',
@@ -46,12 +46,12 @@ export const get = <T = any, R = AxiosResponse<T>>(
   })
 }
 
-export const post = <T = any, R = AxiosResponse<T>>(
+export const post = (
   url: string,
   data?: any,
-  config?: AxiosRequestConfig,
-  noEncrypt?: boolean
-): Promise<AxiosResponse<R>> => {
+  noEncrypt?: boolean,
+  config?: AxiosRequestConfig
+): Promise<AxiosResponse> => {
   return new Promise((resolve, reject) => {
     instance({
       method: 'post',
