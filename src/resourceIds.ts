@@ -4,7 +4,7 @@ const registerUrl = 'api/v1/course-study/course-front/register'
 
 const chapterProgressUrl = 'api/v1/course-study/course-front/chapter-progress'
 
-export const subject = async (courseId: string): Promise<string[]> => {
+export const resourceIds = async (courseId: string): Promise<string[]> => {
   const {
     data: { versionId }
   } = await post(registerUrl, { courseId })
