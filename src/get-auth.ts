@@ -20,7 +20,6 @@ export const getAuth = async (loginData: LoginData): Promise<string> => {
       members: [{ id }]
     }
   } = await post(membersEncryptUrl, loginData, true)
-
   const {
     data: { token_type, access_token }
   } = await post(authUrl, {
@@ -28,6 +27,5 @@ export const getAuth = async (loginData: LoginData): Promise<string> => {
     key: loginData.key,
     userid: id
   })
-
   return token_type + '__' + access_token
 }
