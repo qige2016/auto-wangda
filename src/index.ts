@@ -40,7 +40,7 @@ const autoWangda = new AutoWangda({
     passwordType: 'static',
     username: '13608170940'
   },
-  courseId: 'fd48b9d5-e92c-47e6-9c3b-a856605678b8'
+  courseId: '73d293a6-465c-4560-ad1d-c0837b384218'
 })
 
 autoWangda.run()

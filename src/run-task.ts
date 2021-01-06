@@ -31,22 +31,9 @@ export const runParallel = (logIds: LogId[]): void => {
               { logId: logId.logId, lessonLocation: 1 },
               true
             )
-
-      if (logId.sectionType === 6) {
-        if (data.studyTotalTime >= logId.timeSecond) {
-          logger.success(logId.name + '已完成')
-          job.cancel()
-        } else {
-          logger.info(logId.name + '学习中')
-        }
-      } else {
-        if (data.finishStatus === 2) {
-          logger.success(logId.name + '已完成')
-          job.cancel()
-        } else {
-          logger.info(logId.name + '学习中')
-        }
-      }
+      data.studyTotalTime >= logId.timeSecond || data.finishStatus === 2
+        ? (logger.success(logId.name + '已完成'), job.cancel())
+        : logger.info(logId.name + '学习中')
     })
   })
 }
