@@ -24,7 +24,7 @@ instance.interceptors.request.use(
   (error) => Promise.reject(error)
 )
 
-export const get = (
+export const get = async (
   url: string,
   params?: any,
   config?: AxiosRequestConfig
@@ -46,7 +46,7 @@ export const get = (
   })
 }
 
-export const post = (
+export const post = async (
   url: string,
   data?: any,
   encrypt?: boolean,
