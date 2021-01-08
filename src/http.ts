@@ -41,7 +41,7 @@ export const get = async (
       })
       .catch((error) => {
         logger.error(error.response)
-        return reject(error)
+        reject(error)
       })
   })
 }
@@ -64,7 +64,7 @@ export const post = async (
       })
       .catch((error) => {
         logger.error(error.response)
-        return reject(error)
+        reject(error)
       })
   })
 }

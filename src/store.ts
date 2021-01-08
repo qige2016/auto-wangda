@@ -2,6 +2,7 @@ import { join } from 'path'
 import envPaths from 'env-paths'
 import dotProp from 'dot-prop'
 import { writeFileSync, readFileSync, mkdirSync } from 'fs'
+import { logger } from './logger'
 
 const configDir = envPaths('autoWangda').config
 const storePath = join(configDir, 'config.json')
@@ -9,7 +10,7 @@ const storePath = join(configDir, 'config.json')
 try {
   mkdirSync(configDir, { recursive: true })
 } catch (error) {
-  console.error(error)
+  logger.error(error)
 }
 
 class Store {
