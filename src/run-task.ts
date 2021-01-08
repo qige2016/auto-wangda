@@ -1,3 +1,4 @@
+import ProgressBar from 'progress'
 import { scheduleJob } from 'node-schedule'
 import { post } from './http'
 import { logger } from './logger'
@@ -12,6 +13,9 @@ const docProgressUrl = 'api/v1/course-study/course-front/doc-progress'
 
 export const runParallel = (logIds: LogId[]): void => {
   logIds.map((logId) => {
+    const bar = new ProgressBar(`${logId.name} :percent`, {
+      total: logId.timeSecond as number
+    })
     const job = scheduleJob('0 */1 * * * ?', async () => {
       const { data } =
         logId.sectionType === 6
@@ -31,9 +35,13 @@ export const runParallel = (logIds: LogId[]): void => {
               { logId: logId.logId, lessonLocation: 1 },
               true
             )
-      data.studyTotalTime >= logId.timeSecond || data.finishStatus === 2
-        ? (logger.success(logId.name + '已完成'), job.cancel())
-        : logger.info(logId.name + '学习中')
+      logId.sectionType === 6
+        ? bar.complete
+          ? (bar.terminate(), job.cancel())
+          : bar.tick(data.studyTotalTime)
+        : data.finishStatus === 2
+        ? (console.log(`${logId.name} complete`), job.cancel())
+        : console.log(`${logId.name} ing`)
     })
   })
 }
