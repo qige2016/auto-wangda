@@ -13,10 +13,10 @@ const docProgressUrl = 'api/v1/course-study/course-front/doc-progress'
 
 export const runParallel = (logIds: LogId[]): void => {
   logIds.map((logId) => {
-    const bar = new ProgressBar(`${logId.name} :percent`, {
-      total: logId.timeSecond as number
-    })
     const job = scheduleJob('0 */1 * * * ?', async () => {
+      const bar = new ProgressBar(`${logId.name} :percent`, {
+        total: logId.timeSecond as number
+      })
       const { data } =
         logId.sectionType === 6
           ? await post(
