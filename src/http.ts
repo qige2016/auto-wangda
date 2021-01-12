@@ -6,18 +6,21 @@ import { logger } from './logger'
 import { aes } from '../utils/aes'
 import { toFinite } from '../utils/toFinite'
 
-const instance = axios.create({
+const baseConfig: AxiosRequestConfig = {
   timeout: 30000,
-  baseURL: url
-})
+  baseURL: url,
+  headers: {
+    common: {
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
+    },
+    post: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }
+}
 
-instance.defaults.headers.common['User-Agent'] =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
-
-instance.defaults.headers.post['Content-Type'] =
-  'application/x-www-form-urlencoded'
-
-instance.interceptors.request.use(
+axios.interceptors.request.use(
   (config) => {
     config.headers['Authorization'] = store.get('AUTH_TOKEN') || ''
     return config
@@ -31,17 +34,18 @@ export const get = async (
   config?: AxiosRequestConfig
 ): Promise<AxiosResponse> => {
   return new Promise((resolve, reject) => {
-    instance({
+    axios({
       method: 'get',
       url,
       params,
+      ...baseConfig,
       ...config
     })
       .then((response) => {
         resolve(response)
       })
       .catch((error) => {
-        logger.error(error.response)
+        logger.error(error.response.data.message)
         reject(error)
       })
   })
@@ -54,17 +58,18 @@ export const post = async (
   config?: AxiosRequestConfig
 ): Promise<AxiosResponse> => {
   return new Promise((resolve, reject) => {
-    instance({
+    axios({
       method: 'post',
       url,
       data: encrypt ? qs.stringify(aes.encryptObj(data)) : qs.stringify(data),
+      ...baseConfig,
       ...config
     })
       .then((response) => {
         resolve(response)
       })
       .catch((error) => {
-        logger.error(error.response)
+        logger.error(error.response.data.message)
         reject(error)
       })
   })
@@ -72,7 +77,7 @@ export const post = async (
 
 export const fetchParallel = async (
   requests: AxiosRequestConfig[],
-  chunk_size: number
+  chunk_size?: number
 ): Promise<AxiosResponse[]> => {
   const chunks: any[] = []
 
@@ -97,7 +102,7 @@ export const fetchParallel = async (
 
 async function fetch(req: AxiosRequestConfig) {
   return new Promise((resolve, reject) => {
-    axios(req)
+    axios({ ...baseConfig, ...req })
       .then((res) => {
         resolve(res)
       })
