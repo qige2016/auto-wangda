@@ -4,24 +4,23 @@ import { getLogIds } from './get-logIds'
 import { runTask } from './run-task'
 import { store } from './store'
 import { logger } from './logger'
+import originLoginData from '../config/loginData.json'
 
-interface Data {
+export class AutoWangda {
   loginData: LoginData
   courseId: string
-}
-export class AutoWangda {
-  data: Data
 
-  constructor(data: Data) {
-    this.data = Object.assign({}, data)
+  constructor(loginData: LoginData, courseId: string) {
+    this.loginData = Object.assign(originLoginData, loginData)
+    this.courseId = courseId
   }
 
   async run(): Promise<void> {
-    const auth = await getAuth(this.data.loginData)
+    const auth = await getAuth(this.loginData)
     store.set('AUTH_TOKEN', auth)
     logger.success('登录成功')
 
-    const resourceIds = await getResourceIds(this.data.courseId)
+    const resourceIds = await getResourceIds(this.courseId)
     logger.success('获取专题信息完成')
 
     const logIds = await getLogIds(resourceIds)
@@ -31,16 +30,12 @@ export class AutoWangda {
   }
 }
 
-const autoWangda = new AutoWangda({
-  loginData: {
-    captcha: '',
-    key: 'no-data',
-    loginType: '0',
+const autoWangda = new AutoWangda(
+  {
     password: 'Linda@135',
-    passwordType: 'static',
     username: '13608170940'
   },
-  courseId: '73d293a6-465c-4560-ad1d-c0837b384218'
-})
+  '73d293a6-465c-4560-ad1d-c0837b384218'
+)
 
 autoWangda.run()

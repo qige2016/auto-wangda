@@ -1,11 +1,11 @@
 import { post } from './http'
 
 export interface LoginData {
-  captcha: string
-  key: string
+  captcha?: string
+  key?: string
   password: string
-  loginType: string
-  passwordType: string
+  loginType?: string
+  passwordType?: string
   username: string
 }
 
