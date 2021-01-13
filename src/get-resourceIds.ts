@@ -7,11 +7,14 @@ const chapterProgressUrl = 'api/v1/course-study/course-front/chapter-progress'
 export const getResourceIds = async (courseId: string): Promise<string[]> => {
   const {
     data: { versionId }
-  } = await post(registerUrl, { courseId })
-  const { data } = await get(chapterProgressUrl, {
-    courseId,
-    versionId,
-    isRegister: false
+  } = await post({ url: registerUrl, data: { courseId } })
+  const { data } = await get({
+    url: chapterProgressUrl,
+    params: {
+      courseId,
+      versionId,
+      isRegister: false
+    }
   })
   const arr: string[] = []
   for (const { courseChapterSections } of data) {

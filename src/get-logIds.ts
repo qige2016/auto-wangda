@@ -11,10 +11,13 @@ export const getLogIds = async (
 ): Promise<{ [key: string]: string | number }[]> => {
   const arr: { [key: string]: string | number }[] = []
   for (const resourceId of resourceIds) {
-    await post(registerStudyUrl, { courseId: resourceId, type: 6 })
+    await post({
+      url: registerStudyUrl,
+      data: { courseId: resourceId, type: 6 }
+    })
     const {
       data: { courseChapters }
-    } = await get(courseInfoUrl + resourceId)
+    } = await get({ url: courseInfoUrl + resourceId })
     for (const { courseChapterSections } of courseChapters) {
       for (const {
         id,
@@ -22,7 +25,10 @@ export const getLogIds = async (
         sectionType,
         timeSecond
       } of courseChapterSections) {
-        const { data } = await get(startProgressUrl + id, { clientType: 0 })
+        const { data } = await get({
+          url: startProgressUrl + id,
+          params: { clientType: 0 }
+        })
         arr.push({ logId: data.id, name, sectionType, timeSecond })
       }
     }

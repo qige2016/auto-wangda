@@ -29,15 +29,11 @@ axios.interceptors.request.use(
 )
 
 export const get = async (
-  url: string,
-  params?: any,
-  config?: AxiosRequestConfig
+  config: AxiosRequestConfig
 ): Promise<AxiosResponse> => {
   return new Promise((resolve, reject) => {
     axios({
       method: 'get',
-      url,
-      params,
       ...baseConfig,
       ...config
     })
@@ -52,18 +48,17 @@ export const get = async (
 }
 
 export const post = async (
-  url: string,
-  data?: any,
-  encrypt?: boolean,
-  config?: AxiosRequestConfig
+  config: AxiosRequestConfig,
+  encrypt?: boolean
 ): Promise<AxiosResponse> => {
   return new Promise((resolve, reject) => {
     axios({
       method: 'post',
-      url,
-      data: encrypt ? qs.stringify(aes.encryptObj(data)) : qs.stringify(data),
       ...baseConfig,
-      ...config
+      ...config,
+      data: encrypt
+        ? qs.stringify(aes.encryptObj(config.data))
+        : qs.stringify(config.data)
     })
       .then((response) => {
         resolve(response)
@@ -77,7 +72,8 @@ export const post = async (
 
 export const fetchParallel = async (
   requests: AxiosRequestConfig[],
-  chunk_size?: number
+  chunk_size?: number,
+  encrypt?: boolean
 ): Promise<AxiosResponse[]> => {
   const chunks: any[] = []
 
@@ -90,7 +86,9 @@ export const fetchParallel = async (
   let result: any[] = []
 
   await series(chunks, (chunk: AxiosRequestConfig[]) => {
-    const promises = chunk.map((item: AxiosRequestConfig) => fetch(item))
+    const promises = chunk.map((item: AxiosRequestConfig) =>
+      fetch(item, encrypt)
+    )
 
     return Promise.all(promises).then((res) => {
       result = result.concat(res)
@@ -100,9 +98,15 @@ export const fetchParallel = async (
   return result
 }
 
-async function fetch(req: AxiosRequestConfig) {
+async function fetch(req: AxiosRequestConfig, encrypt?: boolean) {
   return new Promise((resolve, reject) => {
-    axios({ ...baseConfig, ...req })
+    axios({
+      ...baseConfig,
+      ...req,
+      data: encrypt
+        ? qs.stringify(aes.encryptObj(req.data))
+        : qs.stringify(req.data)
+    })
       .then((res) => {
         resolve(res)
       })
