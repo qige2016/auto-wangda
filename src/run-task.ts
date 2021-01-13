@@ -12,33 +12,46 @@ const videoProgressUrl = 'api/v1/course-study/course-front/video-progress'
 const docProgressUrl = 'api/v1/course-study/course-front/doc-progress'
 
 export const runParallel = (logIds: LogId[]): void => {
+  const cachedResponses: any[] = []
   const job = scheduleJob('0 */1 * * * ?', async () => {
-    const requests = logIds.map((logId) =>
-      logId.sectionType === 6
-        ? {
-            method: 'POST' as const,
-            url: videoProgressUrl,
-            data: {
-              logId: logId.logId,
-              lessonLocation: logId.timeSecond,
-              studyTime: logId.timeSecond,
-              resourceTotalTime: logId.timeSecond,
-              organizationId: '1'
-            }
-          }
-        : {
-            method: 'POST' as const,
-            url: docProgressUrl,
-            data: {
-              logId: logId.logId,
-              lessonLocation: 1
-            }
-          }
+    console.log(cachedResponses.length)
+    cachedResponses.length === 0 && job.cancel()
+    const responses = await fetchParallel(
+      logIds
+        .filter((logId, i) =>
+          logId.sectionType === 6
+            ? cachedResponses[i] &&
+              cachedResponses[i]?.studyTotalTime < logId.timeSecond
+            : cachedResponses[i] && cachedResponses[i]?.finishStatus !== 2
+        )
+        .map((logId) =>
+          logId.sectionType === 6
+            ? {
+                method: 'POST' as const,
+                url: videoProgressUrl,
+                data: {
+                  logId: logId.logId,
+                  lessonLocation: logId.timeSecond,
+                  studyTime: logId.timeSecond,
+                  resourceTotalTime: logId.timeSecond,
+                  organizationId: '1'
+                }
+              }
+            : {
+                method: 'POST' as const,
+                url: docProgressUrl,
+                data: {
+                  logId: logId.logId,
+                  lessonLocation: 1
+                }
+              }
+        ),
+      30
     )
-    const responses = await fetchParallel(requests, 30)
     for (let i = 0; i < logIds.length; i++) {
       const logId = logIds[i]
       const { data } = responses[i]
+      cachedResponses.push(data)
       const bar = new ProgressBar(`${logId.name} :percent`, {
         total: logId.timeSecond as number
       })
