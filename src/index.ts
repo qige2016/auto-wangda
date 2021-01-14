@@ -1,6 +1,7 @@
 import { LoginData, getAuth } from './get-auth'
 import { getResourceIds } from './get-resourceIds'
-import { getLogIds } from './get-logIds'
+import { getCourses } from './get-courses'
+import { getSections } from './get-sections'
 import { runTask } from './run-task'
 import { store } from './store'
 import { logger } from './logger'
@@ -18,15 +19,18 @@ export class AutoWangda {
   async run(): Promise<void> {
     const auth = await getAuth(this.loginData)
     store.set('AUTH_TOKEN', auth)
-    logger.success('登录成功')
+    logger.success('Logined')
 
     const resourceIds = await getResourceIds(this.courseId)
-    logger.success('获取专题信息完成')
+    logger.success('Got Resources')
 
-    const logIds = await getLogIds(resourceIds)
-    logger.success('获取课程信息完成')
+    const courses = await getCourses(resourceIds)
+    logger.success('Got Courses')
 
-    runTask(logIds, 'parallel')
+    const sections = await getSections(courses)
+    logger.success('Got Sections')
+
+    runTask(sections, 'parallel')
   }
 }
 
