@@ -1,11 +1,13 @@
-import { get } from './http'
+import { AxiosRequestConfig } from 'axios'
+import { fetchParallel } from './http'
 import { Section, Course } from '../types/couse'
 
 const startProgressUrl = 'api/v1/course-study/course-front/start-progress/'
 
 export const getSections = async (courses: Course[]): Promise<Section[]> => {
-  const arr: Section[] = []
   // get sections of courses
+  const arr: Section[] = []
+  const requests: AxiosRequestConfig[] = []
   for (const { courseChapters } of courses) {
     for (const { courseChapterSections } of courseChapters) {
       for (const {
@@ -14,14 +16,18 @@ export const getSections = async (courses: Course[]): Promise<Section[]> => {
         sectionType,
         timeSecond
       } of courseChapterSections) {
-        const { data } = await get({
+        requests.push({
+          method: 'GET',
           url: startProgressUrl + id,
           params: { clientType: 0 }
         })
-        arr.push({ id: id, logId: data.id, name, sectionType, timeSecond })
+        arr.push({ id, name, sectionType, timeSecond })
       }
     }
   }
-
+  const responses = await fetchParallel(requests)
+  for (let i = 0; i < responses.length; i++) {
+    arr[i].logId = responses[i].data.id
+  }
   return arr
 }
