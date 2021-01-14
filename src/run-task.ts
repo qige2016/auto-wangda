@@ -1,3 +1,4 @@
+import { groupBy, isDate } from 'lodash'
 import { AxiosRequestConfig } from 'axios'
 import { scheduleJob } from 'node-schedule'
 import { post, fetchParallel } from './http'
@@ -13,6 +14,18 @@ const videoProgressUrl = 'api/v1/course-study/course-front/video-progress'
 const docProgressUrl = 'api/v1/course-study/course-front/doc-progress'
 
 export const runParallel = async (sections: Section[]): Promise<void> => {
+  const chunks = Object.values(groupBy(sections, 'chunk_num'))
+  const configs: AxiosRequestConfig[] = []
+  for (const chunk of chunks) {
+    const ids = chunk.map((item) => item.referenceId).join(',')
+    configs.push({
+      method: 'POST',
+      url: courseProgressUrl,
+      data: { ids }
+    })
+  }
+  const courseProgressResponses = await fetchParallel(configs)
+
   const reqs: AxiosRequestConfig[] = sections.map((section) =>
     section.sectionType === 6
       ? {

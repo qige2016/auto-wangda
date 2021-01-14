@@ -8,10 +8,11 @@ export const getSections = async (courses: Course[]): Promise<Section[]> => {
   // get sections of courses
   const arr: Section[] = []
   const requests: AxiosRequestConfig[] = []
-  for (const { courseChapters } of courses) {
+  for (const [index, { courseChapters }] of courses.entries()) {
     for (const { courseChapterSections } of courseChapters) {
       for (const {
         id,
+        referenceId,
         name,
         sectionType,
         timeSecond
@@ -21,7 +22,13 @@ export const getSections = async (courses: Course[]): Promise<Section[]> => {
           url: startProgressUrl + id,
           params: { clientType: 0 }
         })
-        arr.push({ id, name, sectionType, timeSecond })
+        arr.push({
+          referenceId,
+          name,
+          sectionType,
+          timeSecond,
+          chunk_num: index
+        })
       }
     }
   }
