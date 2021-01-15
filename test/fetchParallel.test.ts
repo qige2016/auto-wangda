@@ -12,7 +12,7 @@ test('should return fetch data', async () => {
 
   const requests: AxiosRequestConfig[] = []
 
-  for (let id = 0; id <= 100; id++) {
+  for (let id = 0; id < 100; id++) {
     requests.push({
       method: 'GET',
       url: 'https://github.com'
