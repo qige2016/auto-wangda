@@ -1,11 +1,16 @@
-import { groupBy, isDate } from 'lodash'
+import { groupBy } from 'lodash'
 import { AxiosRequestConfig } from 'axios'
 import { scheduleJob } from 'node-schedule'
-import { post, fetchParallel } from './http'
+import { fetchParallel } from './http'
 import { Section } from '../types/couse'
 import { logger } from './logger'
 
 type Type = 'series' | 'parallel'
+
+interface Incomplete {
+  incompleteProgress: { [key: string]: string | number }[]
+  incompleteSections: { [key: string]: string | number }[]
+}
 
 const courseProgressUrl = 'api/v1/course-study/course-front/course-progress'
 
@@ -13,8 +18,10 @@ const videoProgressUrl = 'api/v1/course-study/course-front/video-progress'
 
 const docProgressUrl = 'api/v1/course-study/course-front/doc-progress'
 
-export const runParallel = async (sections: Section[]): Promise<void> => {
-  const chunks = Object.values(groupBy(sections, 'chunk_num'))
+async function getIncomplete(sections: Section[]): Promise<Incomplete> {
+  const chunks: { [key: string]: string | number }[][] = Object.values(
+    groupBy(sections, 'chunk_num')
+  )
   const configs: AxiosRequestConfig[] = []
   for (const chunk of chunks) {
     const ids = chunk.map((item) => item.referenceId).join(',')
@@ -24,42 +31,37 @@ export const runParallel = async (sections: Section[]): Promise<void> => {
       data: { ids }
     })
   }
-  const courseProgressResponses = await fetchParallel(configs)
+  const progressResponses = await fetchParallel(configs)
 
-  const reqs: AxiosRequestConfig[] = sections.map((section) =>
-    section.sectionType === 6
-      ? {
-          method: 'POST',
-          url: videoProgressUrl,
-          data: {
-            logId: section.logId,
-            lessonLocation: section.timeSecond,
-            studyTime: section.timeSecond,
-            resourceTotalTime: section.timeSecond,
-            organizationId: '1'
-          }
-        }
-      : {
-          method: 'POST',
-          url: docProgressUrl,
-          data: {
-            logId: section.logId,
-            lessonLocation: 1
-          }
-        }
-  )
-  const cachedResponses = await fetchParallel(reqs, 30)
+  const incompleteProgress: { [key: string]: string | number }[] = []
+  const incompleteSections: { [key: string]: string | number }[] = []
+  for (let i = 0; i < progressResponses.length; i++) {
+    const data = progressResponses[i].data.flat()
+    const section = sections[i]
+    for (const item of data) {
+      if (item.finishStatus === 1) {
+        incompleteProgress.push(item)
+        incompleteSections.push(section)
+      }
+    }
+  }
 
-  const job = scheduleJob('0 */1 * * * ?', async () => {
-    cachedResponses.length === 0 && job.cancel()
-    const requests: AxiosRequestConfig[] = []
-    for (let i = 0; i < sections.length; i++) {
-      const section = sections[i]
-      // data may be null when post docProgress
-      const { data } = cachedResponses[i]
-      if (section.sectionType === 6) {
-        data?.studyTotalTime < section.timeSecond &&
-          (requests[i] = {
+  return {
+    incompleteProgress,
+    incompleteSections
+  }
+}
+
+function getIncompleteRequests(
+  incompleteProgress: { [key: string]: string | number }[],
+  sections: Section[]
+): AxiosRequestConfig[] {
+  const requests: AxiosRequestConfig[] = []
+  for (let i = 0; i < incompleteProgress.length; i++) {
+    const section = sections[i]
+    requests.push(
+      section.sectionType === 6
+        ? {
             method: 'POST',
             url: videoProgressUrl,
             data: {
@@ -69,37 +71,64 @@ export const runParallel = async (sections: Section[]): Promise<void> => {
               resourceTotalTime: section.timeSecond,
               organizationId: '1'
             }
-          })
-      } else {
-        data?.finishStatus !== 2 &&
-          (requests[i] = {
+          }
+        : {
             method: 'POST',
             url: docProgressUrl,
             data: {
               logId: section.logId,
               lessonLocation: 1
             }
-          })
-      }
+          }
+    )
+  }
+  return requests
+}
+
+async function postProgress(
+  incompleteRequests: AxiosRequestConfig[],
+  incompleteSections: Section[],
+  chunk_size?: number
+): Promise<void> {
+  const progressResponses = await fetchParallel(incompleteRequests, chunk_size)
+  for (let i = 0; i < progressResponses.length; i++) {
+    const data = progressResponses[i].data
+    const incompleteSection = incompleteSections[i]
+    data.studyTotalTime < incompleteSection.timeSecond &&
+      console.log(incompleteSection.name + 'ing')
+  }
+}
+
+export const runParallel = async (
+  sections: Section[],
+  chunk_size?: number
+): Promise<void> => {
+  let { incompleteProgress, incompleteSections } = await getIncomplete(sections)
+  if (incompleteProgress.length === 0) return
+
+  let incompleteRequests = getIncompleteRequests(incompleteProgress, sections)
+  await postProgress(incompleteRequests, incompleteSections, chunk_size)
+  const incomplete = await getIncomplete(sections)
+  incompleteProgress = incomplete.incompleteProgress
+  incompleteSections = incomplete.incompleteSections
+
+  const job = scheduleJob('0 */1 * * * ?', async () => {
+    if (incompleteProgress.length === 0) return job.cancel()
+
+    incompleteRequests = getIncompleteRequests(incompleteProgress, sections)
+    try {
+      await postProgress(incompleteRequests, incompleteSections, chunk_size)
+    } catch {
+      job.cancel()
     }
-    const responses = await fetchParallel(requests, 30)
-    for (let i = 0; i < sections.length; i++) {
-      const section = sections[i]
-      const { data } = responses[i] || {}
-      cachedResponses[i] = data
-      section.sectionType === 6
-        ? data?.studyTotalTime >= section.timeSecond
-          ? console.log(`${section.name} complete`)
-          : console.log(`${section.name} ing`)
-        : data?.finishStatus === 2
-        ? console.log(`${section.name} complete`)
-        : console.log(`${section.name} ing`)
-    }
+    const incomplete = await getIncomplete(sections)
+    incompleteProgress = incomplete.incompleteProgress
+    incompleteSections = incomplete.incompleteSections
   })
 }
 
 export const runTask = (sections: Section[], type: Type): void => {
-  logger.info('开始学习')
+  logger.info('Starting...')
   if (type === 'parallel') {
     runParallel(sections)
   }

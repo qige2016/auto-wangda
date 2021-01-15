@@ -111,6 +111,7 @@ async function fetch(req: AxiosRequestConfig, encrypt?: boolean) {
         resolve(res)
       })
       .catch((err) => {
+        logger.error(err.response.data.message)
         reject(err)
       })
   })
