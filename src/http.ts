@@ -64,7 +64,7 @@ export const post = async (
         resolve(response)
       })
       .catch((error) => {
-        logger.error(error.response.data.message)
+        logger.error(error.response?.data?.message)
         reject(error)
       })
   })
@@ -77,7 +77,7 @@ export const fetchParallel = async (
 ): Promise<AxiosResponse[]> => {
   const chunks: any[] = []
 
-  chunk_size = toFinite(chunk_size) || 30
+  chunk_size = toFinite(chunk_size) || 10
 
   for (let i = 0; i < requests.length; i += chunk_size) {
     chunks.push(requests.slice(i, i + chunk_size))
@@ -93,6 +93,8 @@ export const fetchParallel = async (
     return Promise.all(promises).then((res) => {
       result = result.concat(res)
     })
+  }).catch((err) => {
+    logger.error(err.response?.data?.message)
   })
 
   return result
@@ -111,7 +113,6 @@ async function fetch(req: AxiosRequestConfig, encrypt?: boolean) {
         resolve(res)
       })
       .catch((err) => {
-        logger.error(err.response.data.message)
         reject(err)
       })
   })

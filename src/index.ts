@@ -39,7 +39,7 @@ const autoWangda = new AutoWangda(
     password: 'Linda@135',
     username: '13608170940'
   },
-  '2d898590-37f3-47ae-8546-c66aab66eeb3'
+  '6dce696d-9fbd-4f02-8e4e-47fda91909a2'
 )
 
 autoWangda.run()
