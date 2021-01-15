@@ -33,16 +33,18 @@ async function getIncomplete(sections: Section[]): Promise<Incomplete> {
   }
   const progressResponses = await fetchParallel(configs)
 
+  const data = progressResponses
+    .map((progressResponse) => progressResponse.data)
+    .flat()
+
   const incompleteProgress: { [key: string]: string | number }[] = []
   const incompleteSections: { [key: string]: string | number }[] = []
-  for (let i = 0; i < progressResponses.length; i++) {
-    const data = progressResponses[i].data.flat()
+  for (let i = 0; i < data.length; i++) {
+    const item = data[i]
     const section = sections[i]
-    for (const item of data) {
-      if (item.finishStatus === 1) {
-        incompleteProgress.push(item)
-        incompleteSections.push(section)
-      }
+    if (item.finishStatus === 1) {
+      incompleteProgress.push(item)
+      incompleteSections.push(section)
     }
   }
 
