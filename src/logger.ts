@@ -20,6 +20,10 @@ class Logger {
   error(...args: any[]): void {
     console.error(chalk.red('error'), ...args)
   }
+
+  status(...args: any[]): void {
+    console.log(...args)
+  }
 }
 
 export const logger = new Logger()

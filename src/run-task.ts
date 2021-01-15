@@ -94,8 +94,9 @@ async function postProgress(
   for (let i = 0; i < progressResponses.length; i++) {
     const data = progressResponses[i].data
     const incompleteSection = incompleteSections[i]
-    data.studyTotalTime < incompleteSection.timeSecond &&
-      console.log(incompleteSection.name + 'ing')
+    const percentage =
+      data.studyTotalTime / (incompleteSection.timeSecond as number)
+    logger.status(`${Math.floor(percentage * 100)}%`, incompleteSection.name)
   }
 }
 
@@ -106,7 +107,10 @@ export const runParallel = async (
   let { incompleteProgress, incompleteSections } = await getIncomplete(sections)
   if (incompleteProgress.length === 0) return
 
-  let incompleteRequests = getIncompleteRequests(incompleteProgress, sections)
+  let incompleteRequests = getIncompleteRequests(
+    incompleteProgress,
+    incompleteSections
+  )
   await postProgress(incompleteRequests, incompleteSections, chunk_size)
   const incomplete = await getIncomplete(sections)
   incompleteProgress = incomplete.incompleteProgress
@@ -115,8 +119,12 @@ export const runParallel = async (
   const job = scheduleJob('0 */1 * * * ?', async () => {
     if (incompleteProgress.length === 0) return job.cancel()
 
-    incompleteRequests = getIncompleteRequests(incompleteProgress, sections)
+    incompleteRequests = getIncompleteRequests(
+      incompleteProgress,
+      incompleteSections
+    )
     try {
+      logger.status()
       await postProgress(incompleteRequests, incompleteSections, chunk_size)
     } catch {
       job.cancel()
