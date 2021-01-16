@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios'
 import { fetchParallel } from './http'
-import { Course } from '../types/couse'
+import { Course } from '../types/common'
 
 const registerStudyUrl = 'api/v1/course-study/course-front/registerStudy'
 

@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios'
 import { fetchParallel } from './http'
-import { Section, Course } from '../types/couse'
+import { Section, Course } from '../types/common'
 
 const startProgressUrl = 'api/v1/course-study/course-front/start-progress/'
 

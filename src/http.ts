@@ -41,7 +41,9 @@ export const get = async (
         resolve(response)
       })
       .catch((error) => {
-        logger.error(error.response.data.message)
+        logger.error(
+          error.response?.data?.message || `Failed to get ${config.url}`
+        )
         reject(error)
       })
   })
@@ -64,7 +66,9 @@ export const post = async (
         resolve(response)
       })
       .catch((error) => {
-        logger.error(error.response?.data?.message)
+        logger.error(
+          error.response?.data?.message || `Failed to post ${config.url}`
+        )
         reject(error)
       })
   })
@@ -93,8 +97,6 @@ export const fetchParallel = async (
     return Promise.all(promises).then((res) => {
       result = result.concat(res)
     })
-  }).catch((err) => {
-    logger.error(err.response?.data?.message)
   })
 
   return result
@@ -113,6 +115,9 @@ async function fetch(req: AxiosRequestConfig, encrypt?: boolean) {
         resolve(res)
       })
       .catch((err) => {
+        logger.error(
+          err.response?.data?.message || `Failed to fetch ${req.url}`
+        )
         reject(err)
       })
   })

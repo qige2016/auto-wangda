@@ -1,19 +1,29 @@
-import { LoginData, getAuth } from './get-auth'
+import { getAuth } from './get-auth'
 import { getResourceIds } from './get-resourceIds'
 import { getCourses } from './get-courses'
 import { getSections } from './get-sections'
 import { runTask } from './run-task'
 import { store } from './store'
 import { logger } from './logger'
+import { LoginData, Type } from '../types/common'
 import originLoginData from '../config/loginData.json'
 
 export class AutoWangda {
   loginData: LoginData
   courseId: string
+  type: Type
+  chunk_size?: number
 
-  constructor(loginData: LoginData, courseId: string) {
+  constructor(
+    loginData: LoginData,
+    courseId: string,
+    type: Type,
+    chunk_size?: number
+  ) {
     this.loginData = Object.assign(originLoginData, loginData)
     this.courseId = courseId
+    this.type = type
+    this.chunk_size = chunk_size
   }
 
   async run(): Promise<void> {
@@ -31,16 +41,6 @@ export class AutoWangda {
     logger.success('Got Sections')
 
     logger.info('Starting...')
-    runTask(sections, 'series')
+    runTask(sections, this.type, this.chunk_size)
   }
 }
-
-const autoWangda = new AutoWangda(
-  {
-    password: 'Linda@135',
-    username: '13608170940'
-  },
-  '30890ef8-7b7e-4d3b-bd63-017484a76ad2'
-)
-
-autoWangda.run()

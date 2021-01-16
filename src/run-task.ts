@@ -2,10 +2,9 @@ import { groupBy } from '../utils'
 import { AxiosRequestConfig } from 'axios'
 import { scheduleJob } from 'node-schedule'
 import { fetchParallel } from './http'
-import { Section } from '../types/couse'
+import { Section } from '../types/common'
 import { logger } from './logger'
-
-type Type = 'series' | 'parallel'
+import { Type } from '../types/common'
 
 interface Incomplete {
   incompleteProgress: { [key: string]: string | number }[]
@@ -147,18 +146,19 @@ export const runTask = async (
       incompleteProgress,
       incompleteSections
     )
-    try {
-      logger.status()
-      type === 'series'
-        ? await postProgress(
-            incompleteRequests.splice(0, 1),
-            incompleteSections.splice(0, 1),
-            1
-          )
-        : await postProgress(incompleteRequests, incompleteSections, chunk_size)
-    } catch {
-      job.cancel()
-    }
+
+    logger.status()
+    logger.status(
+      `[${sections.length - incompleteProgress.length}/${sections.length}]`
+    )
+    type === 'series'
+      ? await postProgress(
+          incompleteRequests.splice(0, 1),
+          incompleteSections.splice(0, 1),
+          1
+        )
+      : await postProgress(incompleteRequests, incompleteSections, chunk_size)
+
     const incomplete = await getIncomplete(sections)
     incompleteProgress = incomplete.incompleteProgress
     incompleteSections = incomplete.incompleteSections

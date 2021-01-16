@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require('../dist/cli-engine')
+require('../dist/src/cli-engine')

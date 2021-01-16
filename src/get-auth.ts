@@ -1,13 +1,5 @@
 import { post } from './http'
-
-export interface LoginData {
-  captcha?: string
-  key?: string
-  password: string
-  loginType?: string
-  passwordType?: string
-  username: string
-}
+import { LoginData } from '../types/common'
 
 const membersEncryptUrl = 'oauth/api/v1/members-encrypt'
 
