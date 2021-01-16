@@ -30,7 +30,8 @@ export class AutoWangda {
     const sections = await getSections(courses)
     logger.success('Got Sections')
 
-    runTask(sections, 'parallel')
+    logger.info('Starting...')
+    runTask(sections, 'series')
   }
 }
 
@@ -39,7 +40,7 @@ const autoWangda = new AutoWangda(
     password: 'Linda@135',
     username: '13608170940'
   },
-  '6dce696d-9fbd-4f02-8e4e-47fda91909a2'
+  '30890ef8-7b7e-4d3b-bd63-017484a76ad2'
 )
 
 autoWangda.run()

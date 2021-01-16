@@ -97,8 +97,10 @@ async function postProgress(
     // data may be null when post doc-progress
     const data = progressResponses[i].data
     const incompleteSection = incompleteSections[i]
-    const percentage =
-      data?.studyTotalTime / (incompleteSection.timeSecond as number)
+    const percentage = Math.min(
+      data?.studyTotalTime / (incompleteSection.timeSecond as number),
+      1
+    )
     isFinite(percentage)
       ? logger.status(
           `${Math.floor(percentage * 100)}%`,
@@ -108,8 +110,9 @@ async function postProgress(
   }
 }
 
-export const runParallel = async (
+export const runTask = async (
   sections: Section[],
+  type: Type,
   chunk_size?: number
 ): Promise<void> => {
   let { incompleteProgress, incompleteSections } = await getIncomplete(sections)
@@ -122,7 +125,13 @@ export const runParallel = async (
     incompleteProgress,
     incompleteSections
   )
-  await postProgress(incompleteRequests, incompleteSections, chunk_size)
+  type === 'series'
+    ? await postProgress(
+        incompleteRequests.splice(0, 1),
+        incompleteSections.splice(0, 1),
+        1
+      )
+    : await postProgress(incompleteRequests, incompleteSections, chunk_size)
   const incomplete = await getIncomplete(sections)
   incompleteProgress = incomplete.incompleteProgress
   incompleteSections = incomplete.incompleteSections
@@ -140,7 +149,13 @@ export const runParallel = async (
     )
     try {
       logger.status()
-      await postProgress(incompleteRequests, incompleteSections, chunk_size)
+      type === 'series'
+        ? await postProgress(
+            incompleteRequests.splice(0, 1),
+            incompleteSections.splice(0, 1),
+            1
+          )
+        : await postProgress(incompleteRequests, incompleteSections, chunk_size)
     } catch {
       job.cancel()
     }
@@ -148,11 +163,4 @@ export const runParallel = async (
     incompleteProgress = incomplete.incompleteProgress
     incompleteSections = incomplete.incompleteSections
   })
-}
-
-export const runTask = (sections: Section[], type: Type): void => {
-  logger.info('Starting...')
-  if (type === 'parallel') {
-    runParallel(sections)
-  }
 }
