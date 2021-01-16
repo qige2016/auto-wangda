@@ -1,4 +1,4 @@
-import { groupBy } from 'lodash'
+import { groupBy } from '../utils'
 import { AxiosRequestConfig } from 'axios'
 import { scheduleJob } from 'node-schedule'
 import { fetchParallel } from './http'
