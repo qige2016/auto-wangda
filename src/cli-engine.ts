@@ -5,14 +5,6 @@ import { AutoWangda } from '.'
 const cli = cac('autoWangda')
 
 cli
-  .option('-u <username>, --username <username>', 'Username')
-  .option('-p <password>, --password <password>', 'Password')
-  .option(
-    '-s <subjectId>, --subjectId <subjectId>',
-    'Subject ID, e.g. `xxx-xxx-xxx-xxx` in #/study/subject/detail/xxx-xxx-xxx-xxx'
-  )
-
-cli
   .command('', 'Parallel request')
   .alias('parallel')
   .option(
