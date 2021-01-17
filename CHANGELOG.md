@@ -1,3 +1,7 @@
+## [2.0.1](https://github.com/qige2016/auto-wangda/compare/v2.0.0...v2.0.1) (2021-01-17)
+
+
+
 # [2.0.0](https://github.com/qige2016/auto-wangda/compare/1.5.0...2.0.0) (2021-01-17)
 
 
