@@ -1,4 +1,4 @@
-import { groupBy } from '../utils'
+import { groupBy } from '../utils/groupBy'
 import { AxiosRequestConfig } from 'axios'
 import { scheduleJob } from 'node-schedule'
 import { fetchParallel } from './http'

@@ -1,6 +1,7 @@
 import { cac } from 'cac'
 import { prompt } from 'enquirer'
 import { AutoWangda } from '.'
+import { loginDataList } from './login-data-list'
 
 const cli = cac('autoWangda')
 
@@ -28,30 +29,46 @@ cli
   .action(async (options: CLIOptions) => {
     let { username, password, subjectId } = options
     const { series, limit } = options
+    if (!username || !password) {
+      const loginDatasMap = loginDataList.groupedLoginDatas
+      if (JSON.stringify(loginDatasMap) !== '{}') {
+        const { _u } = (await prompt({
+          name: '_u',
+          type: 'select',
+          message: '请选择登录模板',
+          choices: [...Object.keys(loginDatasMap), '']
+        })) as { _u: string }
+        username = _u
+        password = loginDatasMap[_u] && loginDatasMap[_u][0].password
+      }
+    }
     if (!username) {
       const { u } = (await prompt({
+        name: 'u',
         type: 'input',
         message: '请输入手机号码/员工编号',
-        name: 'username'
+        validate: (v) => /\S+/.test(v)
       })) as { u: string }
-      username = u
+      username = u.trim()
     }
     if (!password) {
       const { p } = (await prompt({
+        name: 'p',
         type: 'password',
         message: '请输入登录密码',
-        name: 'password'
+        validate: (v) => /\S+/.test(v)
       })) as { p: string }
-      password = p
+      password = p.trim()
     }
     if (!subjectId) {
       const { s } = (await prompt({
+        name: 's',
         type: 'input',
         message:
           '请输入专题ID，e.g. `xxx-xxx-xxx-xxx` in #/study/subject/detail/xxx-xxx-xxx-xxx',
-        name: 'subjectId'
+        validate: (v) => /\S+/.test(v)
       })) as { s: string }
-      subjectId = s
+      subjectId = s.trim()
     }
     const autoWangda = new AutoWangda(
       {

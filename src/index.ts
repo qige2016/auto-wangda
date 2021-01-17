@@ -6,7 +6,8 @@ import { runTask } from './run-task'
 import { store } from './store'
 import { logger } from './logger'
 import { LoginData, Type } from '../types/common'
-import originLoginData from '../config/loginData.json'
+import originLoginData from '../config/login-data.json'
+import { loginDataList } from './login-data-list'
 
 export class AutoWangda {
   loginData: LoginData
@@ -28,6 +29,7 @@ export class AutoWangda {
 
   async run(): Promise<void> {
     const auth = await getAuth(this.loginData)
+    loginDataList.add(this.loginData)
     store.set('AUTH_TOKEN', auth)
     logger.success('Logined')
 
