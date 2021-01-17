@@ -124,6 +124,10 @@ export const runTask = async (
     incompleteProgress,
     incompleteSections
   )
+
+  logger.status(
+    `[${sections.length - incompleteProgress.length}/${sections.length}]`
+  )
   type === 'series'
     ? await postProgress(
         incompleteRequests.splice(0, 1),
