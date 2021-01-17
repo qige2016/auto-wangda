@@ -22,7 +22,6 @@
     "build": "yarn clean && tsc",
     "clean": "rimraf dist",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "commit": "git-cz",
     "dev": "yarn build --watch",
     "lint": "eslint .",
     "preinstall": "node scripts/checkYarn.js",
@@ -30,16 +29,9 @@
     "release": "node scripts/release.js",
     "test": "jest --runInBand"
   },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
+  "gitHooks": {
+    "pre-commit": "lint-staged",
+    "commit-msg": "node scripts/verifyCommit.js"
   },
   "lint-staged": {
     "*.{js,ts}": [
@@ -58,8 +50,6 @@
     "qs": "^6.9.4"
   },
   "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
     "@types/crypto-js": "^4.0.1",
     "@types/eslint": "^7.2.5",
     "@types/jest": "^26.0.15",
@@ -69,13 +59,10 @@
     "@types/qs": "^6.9.5",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
-    "commitizen": "^4.2.2",
     "conventional-changelog-cli": "^2.1.1",
-    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.13.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "husky": "^4.3.0",
     "jest": "^26.6.3",
     "lint-staged": "^10.5.1",
     "prettier": "^2.1.2",
