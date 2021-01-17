@@ -24,7 +24,6 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "dev": "yarn build --watch",
     "lint": "eslint .",
-    "preinstall": "node scripts/checkYarn.js",
     "prepublishOnly": "yarn build",
     "release": "node scripts/release.js",
     "test": "jest --runInBand"
