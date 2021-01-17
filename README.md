@@ -1,40 +1,26 @@
-# auto-wangda
-> 好好学习，天天搬砖
+# auto-wangda [![](https://img.shields.io/npm/v/auto-wangda.svg)](https://www.npmjs.com/package/auto-wangda) [![](https://img.shields.io/npm/dm/auto-wangda.svg)](https://www.npmjs.com/package/auto-wangda) [![](https://img.shields.io/circleci/project/github/qige2016/auto-wangda.svg)](https://circleci.com/gh/qige2016/auto-wangda/tree/master)
 
-## Status
-
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![](https://img.shields.io/circleci/project/github/qige2016/auto-wangda.svg)](https://circleci.com/gh/qige2016/auto-wangda/tree/master)
-[![](https://img.shields.io/npm/v/auto-wangda.svg)](https://www.npmjs.com/package/auto-wangda)
-[![](https://img.shields.io/npm/dm/auto-wangda.svg)](https://www.npmjs.com/package/auto-wangda)
-[![](https://img.shields.io/npm/l/auto-wangda.svg)](https://www.npmjs.com/package/auto-wangda)
-[![](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-
-## Installation
+## Install
 
 ```bash
 npm i -g auto-wangda
 ```
 
-## CLI Usage
+## Usage
 
 ```bash
 autoWangda
 ```
 
-## Usage
-
-``` javascript
-const AutoWangda = require('auto-wangda')
-
-const data = {
-  username: '',
-  password: ''
-}
-const subjectId = ''
-
-const autoWangda = new AutoWangda({ data, subjectId })
-autoWangda.run()
+```bash
+Options:
+  --username <username>    Username
+  --password <password>    Password
+  --subjectId <subjectId>  Subject ID, e.g. `xxx-xxx-xxx-xxx` in #/study/subject/detail/xxx-xxx-xxx-xxx
+  -s, --series             Serial request means request one by one in order
+  --limit <limit>          The maximum number of async operations at a time
+  -h, --help               Display this message
+  -v, --version            Display version number
 ```
 
 ## License
