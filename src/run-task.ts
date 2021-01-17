@@ -2,13 +2,12 @@ import { groupBy } from '../utils/groupBy'
 import { AxiosRequestConfig } from 'axios'
 import { scheduleJob } from 'node-schedule'
 import { fetchParallel } from './http'
-import { Section } from '../types/common'
 import { logger } from './logger'
-import { Type } from '../types/common'
+import { Type, Progress, Section } from '../types/common'
 
 interface Incomplete {
-  incompleteProgress: { [key: string]: string | number }[]
-  incompleteSections: { [key: string]: string | number }[]
+  incompleteProgress: Progress[]
+  incompleteSections: Section[]
 }
 
 const courseProgressUrl = 'api/v1/course-study/course-front/course-progress'
@@ -18,9 +17,7 @@ const videoProgressUrl = 'api/v1/course-study/course-front/video-progress'
 const docProgressUrl = 'api/v1/course-study/course-front/doc-progress'
 
 async function getIncomplete(sections: Section[]): Promise<Incomplete> {
-  const chunks: { [key: string]: string | number }[][] = Object.values(
-    groupBy(sections, 'chunk_num')
-  )
+  const chunks = Object.values(groupBy(sections, 'chunk_num'))
   const configs: AxiosRequestConfig[] = []
   for (const chunk of chunks) {
     const ids = chunk.map((item) => item.referenceId).join(',')
@@ -36,8 +33,8 @@ async function getIncomplete(sections: Section[]): Promise<Incomplete> {
     .map((progressResponse) => progressResponse.data)
     .flat()
 
-  const incompleteProgress: { [key: string]: string | number }[] = []
-  const incompleteSections: { [key: string]: string | number }[] = []
+  const incompleteProgress: Progress[] = []
+  const incompleteSections: Section[] = []
   for (let i = 0; i < data.length; i++) {
     const item = data[i]
     const section = sections[i]
@@ -54,7 +51,7 @@ async function getIncomplete(sections: Section[]): Promise<Incomplete> {
 }
 
 function getIncompleteRequests(
-  incompleteProgress: { [key: string]: string | number }[],
+  incompleteProgress: Progress[],
   sections: Section[]
 ): AxiosRequestConfig[] {
   const requests: AxiosRequestConfig[] = []
@@ -97,7 +94,7 @@ async function postProgress(
     const data = progressResponses[i].data
     const incompleteSection = incompleteSections[i]
     const percentage = Math.min(
-      data?.studyTotalTime / (incompleteSection.timeSecond as number),
+      data?.studyTotalTime / incompleteSection.timeSecond,
       1
     )
     isFinite(percentage)
