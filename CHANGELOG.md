@@ -1,3 +1,12 @@
+## [2.0.3](https://github.com/qige2016/auto-wangda/compare/v2.0.2...v2.0.3) (2021-01-18)
+
+
+### Bug Fixes
+
+* add password condition ([159c3ca](https://github.com/qige2016/auto-wangda/commit/159c3ca9a7538a39ed82b532685771d126b72501))
+
+
+
 ## [2.0.2](https://github.com/qige2016/auto-wangda/compare/v2.0.1...v2.0.2) (2021-01-17)
 
 
