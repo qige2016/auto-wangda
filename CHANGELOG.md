@@ -1,3 +1,13 @@
+## [2.0.5](https://github.com/qige2016/auto-wangda/compare/v2.0.3...v2.0.5) (2021-04-08)
+
+
+### Bug Fixes
+
+* replace break with continue ([667298d](https://github.com/qige2016/auto-wangda/commit/667298d93e39fe3490d7add6d1a8a14d9934df4e))
+* replace login type ([fe360d5](https://github.com/qige2016/auto-wangda/commit/fe360d5a5dfa0ee6f7f9eaf3a955650d662e6da5))
+
+
+
 ## [2.0.4](https://github.com/qige2016/auto-wangda/compare/v2.0.3...v2.0.4) (2021-04-08)
 
 
