@@ -1,3 +1,12 @@
+## [2.0.4](https://github.com/qige2016/auto-wangda/compare/v2.0.3...v2.0.4) (2021-04-08)
+
+
+### Bug Fixes
+
+* replace login type ([fe360d5](https://github.com/qige2016/auto-wangda/commit/fe360d5a5dfa0ee6f7f9eaf3a955650d662e6da5))
+
+
+
 ## [2.0.3](https://github.com/qige2016/auto-wangda/compare/v2.0.2...v2.0.3) (2021-01-18)
 
 
