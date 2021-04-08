@@ -17,8 +17,8 @@ class LoginDataList {
     let exist = false
     for (const item of this.store) {
       if (
-        item.username === loginData.username &&
-        item.password === loginData.password
+        item.loginType === loginData.loginType &&
+        item.username === loginData.username
       ) {
         exist = true
       }

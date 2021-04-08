@@ -1,6 +1,6 @@
 {
   "captcha": "",
   "key": "no-data",
-  "loginType": "0",
+  "loginType": "1",
   "passwordType": "static"
 }

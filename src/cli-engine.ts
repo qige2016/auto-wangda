@@ -2,6 +2,7 @@ import { cac } from 'cac'
 import { prompt } from 'enquirer'
 import { AutoWangda } from '.'
 import { loginDataList } from './login-data-list'
+import { getDynamicPassword } from './get-dynamicPassword'
 
 const cli = cac('autoWangda')
 
@@ -39,7 +40,6 @@ cli
           choices: [...Object.keys(loginDatasMap), '']
         })) as { _u: string }
         username = _u
-        password = loginDatasMap[_u] && loginDatasMap[_u][0].password
       }
     }
     if (!username) {
@@ -52,10 +52,11 @@ cli
       username = u.trim()
     }
     if (!password) {
+      getDynamicPassword(username)
       const { p } = (await prompt({
         name: 'p',
         type: 'password',
-        message: '请输入登录密码',
+        message: '请输入验证码',
         validate: (v) => /\S+/.test(v)
       })) as { p: string }
       password = p.trim()

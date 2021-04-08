@@ -18,6 +18,7 @@ export const getResourceIds = async (courseId: string): Promise<string[]> => {
   })
   const arr: string[] = []
   for (const { courseChapterSections } of data) {
+    if (!courseChapterSections) break
     for (const { sectionType, resourceId } of courseChapterSections) {
       sectionType === 10 && arr.push(resourceId)
     }
