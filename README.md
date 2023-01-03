@@ -23,6 +23,14 @@ Options:
   -v, --version            Display version number
 ```
 
+## Donate
+
+If you find this project useful, you can buy author a glass of juice 🍹
+
+![image](https://user-images.githubusercontent.com/18051955/210329720-6094eed0-1508-43ec-8cf2-9ba8dad5e3a3.png)
+![image](https://user-images.githubusercontent.com/18051955/210329808-63bf8340-bb1b-46cc-93fc-775930430237.png)
+
+
 ## License
 
 MIT &copy; qige2016
