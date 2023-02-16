@@ -1,4 +1,4 @@
-# auto-wangda [![](https://img.shields.io/npm/v/auto-wangda.svg)](https://www.npmjs.com/package/auto-wangda) [![](https://img.shields.io/npm/dm/auto-wangda.svg)](https://www.npmjs.com/package/auto-wangda) [![](https://img.shields.io/circleci/project/github/qige2016/auto-wangda.svg)](https://circleci.com/gh/qige2016/auto-wangda/tree/master)
+# [该项目不再维护]auto-wangda [![](https://img.shields.io/npm/v/auto-wangda.svg)](https://www.npmjs.com/package/auto-wangda) [![](https://img.shields.io/npm/dm/auto-wangda.svg)](https://www.npmjs.com/package/auto-wangda) [![](https://img.shields.io/circleci/project/github/qige2016/auto-wangda.svg)](https://circleci.com/gh/qige2016/auto-wangda/tree/master)
 
 ## Install
 
